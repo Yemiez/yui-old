@@ -1,0 +1,32 @@
+<doc>
+  <body>
+	  <div>
+		<h1>Welcome to Test</h1>
+	  </div>
+	  <div>
+		<button>åäöê <emoji>🚀</emoji></button>
+		<button>Hello 1</button>
+		<button>Hello 2</button>
+		<button>Hello 3</button>
+		<button>Hello 4</button>
+		<button>Hello 5</button>
+		<button>Hello 6</button>
+	  </div>
+	  <div>
+		<input size="24" placeholder="Type here..." value="">
+	  </div>
+	  <div>
+		Textarea:
+		<textarea rows="45" cols="200" value="#include <cstdio>
+
+int main() {
+    printf(\"Hello world\n\");
+}"/>
+	  </div>
+	  <div>
+		<div>This is working surprisingly well..</div>
+		<div><b>This is bold</b></div>
+		<div><i>This is italic</i></div>
+	  </div>
+  </body>
+</doc>

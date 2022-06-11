@@ -1,0 +1,3 @@
+h2, h3, div > span .class1#id.class3:hover {
+	color: #000;
+}

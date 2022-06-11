@@ -1,0 +1,92 @@
+
+doc {
+	display: block;
+	font-name: ./assets/fonts/Roboto/Roboto-Regular.ttf;
+	font-size: 14px;
+	padding-x: 0;
+	padding-y: 0;
+}
+
+div {
+	display: block;
+	padding-x: 2px;
+	padding-y: 2px;
+}
+
+body {
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	border-size: 1px;
+	border-color: #000000;
+	background-color: #36393f;
+}
+
+span, p, b, i, em, h1, h2, h3, h4 {
+	display: inline;
+}
+
+i, em {
+	font-name: ./assets/fonts/Roboto/Roboto-Italic.ttf;
+}
+
+b {
+	font-name: ./assets/fonts/Roboto/Roboto-Bold.ttf;
+}
+
+h1, h2, h3, h4, {
+	font-name: ./assets/fonts/Roboto/Roboto-Bold.ttf;
+}
+
+h1 {
+	font-size: 32px;
+}
+
+h2 {
+	font-size: 24px;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+h4 {
+	font-size: 16px;
+}
+
+button {
+	display: inline;
+	background-color: #747f8d;
+	text-color: #ffffff;
+	padding-y: 8px;
+	padding-x: 16px;
+	cursor: hand;
+}
+
+button:hover {
+	background-color: #68727f;
+}
+
+input {
+	font-name: ./assets/fonts/Jetbrains/JetBrainsMono-Regular.ttf;
+	background-color: #40444b;
+	text-color: #ffffff;
+	padding-x: 10px;
+	padding-y: 10px;
+	cursor: input;
+}
+
+textarea {
+	font-name: ./assets/fonts/Jetbrains/JetBrainsMono-Regular.ttf;
+	background-color: #1e1e1e;
+	text-color: #ffffff;
+	padding-x: 10px;
+	padding-y: 10px;
+	cursor: input;
+}
+
+emoji {
+	display: inline;
+	font-name: ./assets/fonts/Emoji/NotoEmoji.ttf;
+}
