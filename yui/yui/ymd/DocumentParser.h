@@ -5,83 +5,80 @@
 #include "DocumentLexer.h"
 
 namespace yui {
-	class DocumentNode;
-	class Node;
-	class DocumentLexer;
+class DocumentNode;
+class Node;
+class DocumentLexer;
 
-	class DocumentParseError
-	{
-	public:
-		DocumentParseError() = default;
-		DocumentParseError(const DocumentParseError&) = default;
-		DocumentParseError(DocumentParseError&&) = default;
-		DocumentParseError(DocumentToken, std::string);
+class DocumentParseError {
+public:
+    DocumentParseError() = default;
+    DocumentParseError(const DocumentParseError &) = default;
+    DocumentParseError(DocumentParseError &&) = default;
+    DocumentParseError(DocumentToken, std::string);
 
-		// Which token caused the error?
-		const DocumentToken& token() const { return m_token; }
+    // Which token caused the error?
+    const DocumentToken &token() const { return m_token; }
 
-		// Get the message of the error.
-		const std::string& message() const { return m_message; }
-		
-	private:
-		DocumentToken m_token{};
-		std::string m_message{};
-	};
-	
-	class DocumentParser
-	{
-	private:
-		enum class ParserState;
-	public:
-		DocumentParser() = delete;
-		DocumentParser(const DocumentParser&) = delete;
-		DocumentParser(DocumentParser&&) = delete;
-		DocumentParser(DocumentLexer);
+    // Get the message of the error.
+    const std::string &message() const { return m_message; }
 
-		// did any errors occur? Note that the Document tree may still be functional.
-		bool has_error() const { return !m_errors.empty(); }
+private:
+    DocumentToken m_token{ };
+    std::string m_message{ };
+};
 
-		// Get any DocumentParseErrors that occurred.
-		const std::vector<DocumentParseError>& errors() const { return m_errors; }
+class DocumentParser {
+private:
+    enum class ParserState;
+public:
+    DocumentParser() = delete;
+    DocumentParser(const DocumentParser &) = delete;
+    DocumentParser(DocumentParser &&) = delete;
+    explicit DocumentParser(DocumentLexer);
 
-		// Get the DocumentNode containing the parsed tree.
-		const DocumentNode* document() const { return m_document; }
+    // did any errors occur? Note that the Document tree may still be functional.
+    [[nodiscard]] bool has_error() const { return !m_errors.empty(); }
 
-		// Get the DocumentNode* and release the DocumentParser from ownership.
-		DocumentNode* release_document();
-	private:
-		static bool is_self_closing(const std::string& cs);
-		void construct_tree();
+    // Get any DocumentParseErrors that occurred.
+    [[nodiscard]] const std::vector<DocumentParseError> &errors() const { return m_errors; }
 
-		// for text fragments
-		void will_change_state(ParserState);
-		void change_state(ParserState);
+    // Get the DocumentNode containing the parsed tree.
+    [[nodiscard]] const DocumentNode *document() const { return m_document; }
 
-		void append_text_fragment(std::string);
-		void append_new_node(const DocumentToken& token);
+    // Get the DocumentNode* and release the DocumentParser from ownership.
+    DocumentNode *release_document();
+private:
+    static bool is_self_closing(const std::string &cs);
+    void construct_tree();
 
-		// Get the current parent that is being built.
-		Node* working_parent();
+    // for text fragments
+    void will_change_state(ParserState);
+    void change_state(ParserState);
 
-		void omit_error(const DocumentToken& token, std::string);
-	private:
-		DocumentLexer m_lexer;
-		DocumentNode* m_document{nullptr};
-		std::vector<DocumentParseError> m_errors{};
-		std::stack<Node*> m_working_stack{};
-		std::vector<Node*> m_history{};
-		std::string m_buffer{};
-		std::string m_current_attribute{};
-		enum class ParserState
-		{
-			ExpectingDocument,
-			Error,
-			Done,
-			AfterTagName,
-			InTagBody,
-			InTagAttributeDeclaration,
-			InClosingTag,
-		} m_parser_state{ParserState::ExpectingDocument};
-	};
-	
+    void append_text_fragment(std::string);
+    void append_new_node(const DocumentToken &token);
+
+    // Get the current parent that is being built.
+    Node *working_parent();
+
+    void omit_error(const DocumentToken &token, std::string);
+private:
+    DocumentLexer m_lexer;
+    DocumentNode *m_document{ nullptr };
+    std::vector<DocumentParseError> m_errors{ };
+    std::stack<Node *> m_working_stack{ };
+    std::vector<Node *> m_history{ };
+    std::string m_buffer{ };
+    std::string m_current_attribute{ };
+    enum class ParserState {
+        ExpectingDocument,
+        Error,
+        Done,
+        AfterTagName,
+        InTagBody,
+        InTagAttributeDeclaration,
+        InClosingTag,
+    } m_parser_state{ ParserState::ExpectingDocument };
+};
+
 }

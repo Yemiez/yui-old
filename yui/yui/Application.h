@@ -18,58 +18,56 @@
 
 struct GLFWwindow;
 namespace yui {
-	class Window;
+class Window;
 
-	class Application
-	{
-	private:
-		struct WindowInstance;
-		
-	public:
-		Application(int, char**);
+class Application {
+private:
+    struct WindowInstance;
 
-		int exec();
+public:
+    Application(int, char **);
 
-		FT_Library freetype() { return m_freetype_library; }
+    int exec();
 
-		bool halting() const { return m_halting; }
-		void halt(int exit_code = 0);
+    FT_Library freetype() { return m_freetype_library; }
 
-		void register_window(yui::Window*);
-		//void unregister_window(yui::Window*);
+    [[nodiscard]] bool halting() const { return m_halting; }
+    void halt(int exit_code = 0);
 
-		void report_error(const std::string&);
-		
-		static bool initialized();
-		static Application& the();
+    void register_window(yui::Window *);
+    //void unregister_window(yui::Window*);
 
-		void window_resize(Window*, int x, int y);
-		void window_refresh(Window*);
+    void report_error(const std::string &);
 
-		io::Profiler<>& profiler() { return m_profiler; }
-	private:
-		void do_window_refresh(WindowInstance&);
-		
-	private:
-		struct WindowInstance
-		{
-			uint32_t id{};
-			Window* window{};
-			GLFWwindow *glfw{};
-			std::map<uint32_t, bool> flags{};
-			FrameTimer<> timer{};
-			float passed_time{0.f};
-			bool initialized{false};
-			int fps{0};
-			std::string original_title{};
-		};
-		
-		std::vector<std::string> m_arguments{};
-		bool m_halting{false};
-		int m_exit_code{0};
-		std::map<uint32_t, WindowInstance> m_window_map{};
-		FT_Library m_freetype_library{};
-		uint32_t m_window_counter{0};
-		io::Profiler<> m_profiler{};
-	};
+    static bool initialized();
+    static Application &the();
+
+    void window_resize(Window *, int x, int y);
+    void window_refresh(Window *);
+
+    io::Profiler<> &profiler() { return m_profiler; }
+private:
+    void do_window_refresh(WindowInstance &);
+
+private:
+    struct WindowInstance {
+        uint32_t id{ };
+        Window *window{ };
+        GLFWwindow *glfw{ };
+        std::map<uint32_t, bool> flags{ };
+        FrameTimer<> timer{ };
+        float passed_time{ 0.f };
+        bool initialized{ false };
+        int fps{ 0 };
+        std::string original_title{ };
+    };
+
+    std::vector<std::string> m_arguments{ };
+    bool m_halting{ false };
+    int m_exit_code{ 0 };
+    std::map<uint32_t, WindowInstance> m_window_map{ };
+    FT_Library m_freetype_library{ };
+    uint32_t m_window_counter{ 0 };
+    io::Profiler<> m_profiler{ };
+};
 }

@@ -5,60 +5,57 @@
 #include "../Stream.h"
 
 namespace yui {
-	class StylesheetDeclaration;
+class StylesheetDeclaration;
 
-	class StylesheetParseError
-	{
-	public:
-		StylesheetParseError() = default;
-		StylesheetParseError(const StylesheetParseError&) = default;
-		StylesheetParseError(StylesheetParseError&&) = default;
-		StylesheetParseError(StylesheetToken, std::string);
+class StylesheetParseError {
+public:
+    StylesheetParseError() = default;
+    StylesheetParseError(const StylesheetParseError &) = default;
+    StylesheetParseError(StylesheetParseError &&) = default;
+    StylesheetParseError(StylesheetToken, std::string);
 
-		// Which token caused the error?
-		const StylesheetToken& token() const { return m_token; }
+    // Which token caused the error?
+    [[nodiscard]] const StylesheetToken &token() const { return m_token; }
 
-		// Get the message of the error.
-		const std::string& message() const { return m_message; }
-		
-	private:
-		StylesheetToken m_token{};
-		std::string m_message{};
-	};
-	
-	class StylesheetParser
-	{
-	private:
-		enum class ParseState
-		{
-			Error,
-			ExpectingSelectorPart,
-			ExpectingProperties,
-		};
-		
-	public:
-		StylesheetParser(const StylesheetLexer&);
+    // Get the message of the error.
+    [[nodiscard]] const std::string &message() const { return m_message; }
 
-		bool has_errors() const { return !m_errors.empty(); }
-		const std::vector<StylesheetParseError>& errors() const { return m_errors; }
+private:
+    StylesheetToken m_token{ };
+    std::string m_message{ };
+};
 
-		const std::vector<StylesheetDeclaration>& declarations() const { return m_declarations; }
-		std::vector<StylesheetDeclaration>& declarations() { return m_declarations; }
-	private:
-		void parse();
-		ParseState parse_expecting_selector_part();
-		ParseState parse_expecting_properties();
+class StylesheetParser {
+private:
+    enum class ParseState {
+        Error,
+        ExpectingSelectorPart,
+        ExpectingProperties,
+    };
 
-		void emit_error(StylesheetToken, std::string);
-	private:
-		StreamReader<std::vector<StylesheetToken>> m_reader;
-		std::vector<StylesheetDeclaration> m_declarations{};
-		std::vector<StylesheetParseError> m_errors{};
-		StylesheetDeclaration *m_current_declaration{nullptr};
-		yui::Selector m_current_selector{};
-		yui::Selector::SimpleSelector m_current_simple{};
-		std::vector<yui::Selector> m_current_selectors{};
-		ParseState m_parser_state{ParseState::ExpectingSelectorPart};
-	};
-	
+public:
+    explicit StylesheetParser(const StylesheetLexer &);
+
+    [[nodiscard]] bool has_errors() const { return !m_errors.empty(); }
+    [[nodiscard]] const std::vector<StylesheetParseError> &errors() const { return m_errors; }
+
+    [[nodiscard]] const std::vector<StylesheetDeclaration> &declarations() const { return m_declarations; }
+    std::vector<StylesheetDeclaration> &declarations() { return m_declarations; }
+private:
+    void parse();
+    ParseState parse_expecting_selector_part();
+    ParseState parse_expecting_properties();
+
+    void emit_error(StylesheetToken, std::string);
+private:
+    StreamReader<std::vector<StylesheetToken>> m_reader;
+    std::vector<StylesheetDeclaration> m_declarations{ };
+    std::vector<StylesheetParseError> m_errors{ };
+    StylesheetDeclaration *m_current_declaration{ nullptr };
+    yui::Selector m_current_selector{ };
+    yui::Selector::SimpleSelector m_current_simple{ };
+    std::vector<yui::Selector> m_current_selectors{ };
+    ParseState m_parser_state{ ParseState::ExpectingSelectorPart };
+};
+
 }

@@ -8,6 +8,7 @@
 struct GLFWwindow;
 
 namespace yui {
+    class Application;
 
 	class Window
 	{

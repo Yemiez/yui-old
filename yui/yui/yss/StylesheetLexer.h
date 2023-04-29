@@ -6,32 +6,32 @@
 namespace yui {
 
 #define STYLESHEET_TOKEN_ENUMERATOR \
-	_STYLESHEET_TOKEN_ENUMERATOR_(None, none) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(Comma, comma) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(CompoundDelimiter, compound_delimiter) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(Universal, universal) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(TagName, tag_name) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(IdRef, id_ref) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(ClassName, class_name) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(PseudoIdentifier, pseudo_identifier) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(Plus, plus) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(Greater, greater) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(BraceOpen, brace_open) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(PropertyName, property_name) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(Colon, colon) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(PropertyValue, property_value) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(PropertyColorValue, property_color_value) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(PropertyPixelValue, property_pixel_value) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(PropertyPercentageValue, property_percentage_value) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(SemiColon, semi_colon) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(BraceClose, brace_close) \
-	_STYLESHEET_TOKEN_ENUMERATOR_(Eof, eof)
+	STYLESHEET_TOKEN_ENUMERATOR_(None, none) \
+	STYLESHEET_TOKEN_ENUMERATOR_(Comma, comma) \
+	STYLESHEET_TOKEN_ENUMERATOR_(CompoundDelimiter, compound_delimiter) \
+	STYLESHEET_TOKEN_ENUMERATOR_(Universal, universal) \
+	STYLESHEET_TOKEN_ENUMERATOR_(TagName, tag_name) \
+	STYLESHEET_TOKEN_ENUMERATOR_(IdRef, id_ref) \
+	STYLESHEET_TOKEN_ENUMERATOR_(ClassName, class_name) \
+	STYLESHEET_TOKEN_ENUMERATOR_(PseudoIdentifier, pseudo_identifier) \
+	STYLESHEET_TOKEN_ENUMERATOR_(Plus, plus) \
+	STYLESHEET_TOKEN_ENUMERATOR_(Greater, greater) \
+	STYLESHEET_TOKEN_ENUMERATOR_(BraceOpen, brace_open) \
+	STYLESHEET_TOKEN_ENUMERATOR_(PropertyName, property_name) \
+	STYLESHEET_TOKEN_ENUMERATOR_(Colon, colon) \
+	STYLESHEET_TOKEN_ENUMERATOR_(PropertyValue, property_value) \
+	STYLESHEET_TOKEN_ENUMERATOR_(PropertyColorValue, property_color_value) \
+	STYLESHEET_TOKEN_ENUMERATOR_(PropertyPixelValue, property_pixel_value) \
+	STYLESHEET_TOKEN_ENUMERATOR_(PropertyPercentageValue, property_percentage_value) \
+	STYLESHEET_TOKEN_ENUMERATOR_(SemiColon, semi_colon) \
+	STYLESHEET_TOKEN_ENUMERATOR_(BraceClose, brace_close) \
+	STYLESHEET_TOKEN_ENUMERATOR_(Eof, eof)
 	
 	enum class StylesheetTokenType
 	{
-#define _STYLESHEET_TOKEN_ENUMERATOR_(x, ...) x,
+#define STYLESHEET_TOKEN_ENUMERATOR_(x, ...) x,
 		STYLESHEET_TOKEN_ENUMERATOR
-#undef _STYLESHEET_TOKEN_ENUMERATOR_
+#undef STYLESHEET_TOKEN_ENUMERATOR_
 	};
 
 	class StylesheetToken
@@ -39,24 +39,24 @@ namespace yui {
 	public:
 		StylesheetToken() = default;
 		StylesheetToken(StreamPosition start, StreamPosition end, std::string content, StylesheetTokenType);
-		StreamPosition start_position() const { return m_start_position; }
-		StreamPosition end_position() const { return m_end_position; }
-		const std::string& content() const { return m_content; }
-		StylesheetTokenType type() const { return m_type; }
+		[[nodiscard]] StreamPosition start_position() const { return m_start_position; }
+		[[nodiscard]] StreamPosition end_position() const { return m_end_position; }
+		[[nodiscard]] const std::string& content() const { return m_content; }
+		[[nodiscard]] StylesheetTokenType type() const { return m_type; }
 		static const char* type_to_string(StylesheetTokenType);
-		std::string to_string() const;
+		[[nodiscard]] std::string to_string() const;
 
-#define _STYLESHEET_TOKEN_ENUMERATOR_(x, y) bool is_##y() const { return m_type == StylesheetTokenType::x; }
+#define STYLESHEET_TOKEN_ENUMERATOR_(x, y) bool is_##y() const { return m_type == StylesheetTokenType::x; }
 		STYLESHEET_TOKEN_ENUMERATOR
-#undef _STYLESHEET_TOKEN_ENUMERATOR_
+#undef STYLESHEET_TOKEN_ENUMERATOR_
 
-		bool is_relation_operator() const { return is_greater() || is_plus(); }
-		bool is_any_property_value() const
+		[[nodiscard]] bool is_relation_operator() const { return is_greater() || is_plus(); }
+		[[nodiscard]] bool is_any_property_value() const
 		{
 			return is_property_value() || is_property_color_value() || 
 				is_property_pixel_value() || is_property_percentage_value();
 		}
-		bool is_any_selector() const
+		[[nodiscard]] bool is_any_selector() const
 		{
 			return is_universal() || is_tag_name() || is_id_ref() || is_class_name();
 		}
@@ -72,9 +72,9 @@ namespace yui {
 	{
 	public:
 		StylesheetLexError(StreamPosition, std::string);
-		StreamPosition position() const { return m_position; }
-		const std::string& message() const { return m_message; }
-		std::string to_string() const;
+		[[nodiscard]] StreamPosition position() const { return m_position; }
+		[[nodiscard]] const std::string& message() const { return m_message; }
+		[[nodiscard]] std::string to_string() const;
 	private:
 		StreamPosition m_position{};
 		std::string m_message{};
@@ -104,12 +104,12 @@ namespace yui {
 		};
 	public:
 		static const auto ERROR_THRESHOLD = 8;
-		StylesheetLexer(std::string);
+		explicit StylesheetLexer(std::string);
 
-		bool has_errors() const { return !m_errors.empty(); }
-		const std::vector<StylesheetLexError>& errors() const { return m_errors; }
+		[[nodiscard]] bool has_errors() const { return !m_errors.empty(); }
+		[[nodiscard]] const std::vector<StylesheetLexError>& errors() const { return m_errors; }
 
-		const std::vector<StylesheetToken>& tokens() const { return m_tokens; }
+		[[nodiscard]] const std::vector<StylesheetToken>& tokens() const { return m_tokens; }
 		
 	private:
 		void lex();

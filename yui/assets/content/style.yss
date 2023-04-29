@@ -8,26 +8,22 @@ doc {
 }
 
 div {
-	display: block;
-	padding-x: 2px;
-	padding-y: 2px;
+    display: block;
+    padding-x: 2px;
+    padding-y: 2px;
 }
 
 body {
-	margin-left: 5px;
-	margin-top: 5px;
-	margin-right: 5px;
-	margin-bottom: 5px;
-	border-size: 1px;
-	border-color: #000000;
-	background-color: #36393f;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-size: 1px;
+    border-color: #000000;
+    background-color: #36393f;
 }
 
-span, p, b, i, em, h1, h2, h3, h4 {
-	display: inline;
-}
-
-i, em {
+i {
 	font-name: ./assets/fonts/Roboto/Roboto-Italic.ttf;
 }
 
@@ -35,11 +31,8 @@ b {
 	font-name: ./assets/fonts/Roboto/Roboto-Bold.ttf;
 }
 
-h1, h2, h3, h4, {
-	font-name: ./assets/fonts/Roboto/Roboto-Bold.ttf;
-}
-
 h1 {
+	font-name: ./assets/fonts/Roboto/Roboto-Bold.ttf;
 	font-size: 32px;
 }
 
@@ -65,28 +58,72 @@ button {
 }
 
 button:hover {
-	background-color: #68727f;
+    background-color: #4f545c;
 }
 
 input {
-	font-name: ./assets/fonts/Jetbrains/JetBrainsMono-Regular.ttf;
-	background-color: #40444b;
-	text-color: #ffffff;
-	padding-x: 10px;
-	padding-y: 10px;
-	cursor: input;
+    font-name: ./assets/fonts/JetBrains/JetBrainsMono-Regular.ttf;
+    background-color: #1e1e1e;
+    text-color: #ffffff;
+    padding-x: 20px;
+    padding-y: 20px;
+    cursor: input;
+    font-size: 17px;
 }
 
 textarea {
 	font-name: ./assets/fonts/Jetbrains/JetBrainsMono-Regular.ttf;
 	background-color: #1e1e1e;
 	text-color: #ffffff;
-	padding-x: 10px;
-	padding-y: 10px;
+	padding-x: 20px;
+	padding-y: 20px;
 	cursor: input;
+	border-size: 1px;
+	border-color: #ff0000;
 }
 
 emoji {
 	display: inline;
 	font-name: ./assets/fonts/Emoji/NotoEmoji.ttf;
+}
+
+.container {
+    padding-x: 20px;
+    padding-y: 10px;
+    background-color: #2f3136;
+    border-size: 1px;
+    border-color: #000000;
+}
+
+// primary is a light green (with dark green hover)
+// secondary color is a light red (with dark red hover)
+// tertiary has no borders and no background except hover
+
+button.primary {
+    background-color: #43b581;
+    border-size: 1px;
+    border-color: #43b581;
+}
+button.primary:hover {
+    background-color: #3ea169;
+}
+button.secondary {
+    background-color: #f04747;
+    border-size: 1px;
+    border-color: #f04747;
+}
+button.secondary:hover {
+    background-color: #d74444;
+}
+
+button.tertiary {
+    border-size: 0px;
+}
+
+h1 {
+    text-color: #7289da;
+}
+
+.text-container {
+    background-color: #2f3136;
 }

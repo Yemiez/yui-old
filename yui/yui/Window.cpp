@@ -1,10 +1,10 @@
 #include "Window.h"
 
 #include <iostream>
+#include <GLFW/glfw3.h>
 #include "includes.h"
 #include "Application.h"
 #include "Util.h"
-#include "log/Registry.h"
 
 // callback definitions
 void callback_window_close(GLFWwindow*);
@@ -59,7 +59,7 @@ bool yui::Window::create(int width, int height, const std::string& title, bool v
 	// Application & Painter
 	Application::the().register_window(this);
 
-	log::success("Created window with id {} (name {}, size {} {})", m_window_id, m_title, m_width, m_height);
+	spdlog::info("Created window with id {} (name {}, size {} {})", m_window_id, m_title, m_width, m_height);
 	return true;
 }
 

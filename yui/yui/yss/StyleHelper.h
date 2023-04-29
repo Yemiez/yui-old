@@ -5,13 +5,12 @@
 
 namespace yui {
 
-	class StyleHelper
-	{
-	private:
-		StyleHelper() = default;
+class StyleHelper {
+private:
+    StyleHelper() = default;
 
-	public:
-		static std::unique_ptr<StylesheetDeclaration> merge(std::vector<StylesheetDeclaration*> declarations);
-	};
-	
+public:
+    static std::unique_ptr<StylesheetDeclaration> merge(std::vector<StylesheetDeclaration *> declarations);
+};
+
 }

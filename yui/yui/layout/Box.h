@@ -3,18 +3,17 @@
 
 namespace yui::layout {
 
-	class Box : public LayoutNode
-	{
-	public:
-		void paint(yui::Painter&) override;
-		void compute() override;
-		bool is_box() const override { return true; }
+class Box : public LayoutNode {
+public:
+    void paint(yui::Painter &) override;
+    void compute() override;
+    [[nodiscard]] bool is_box() const override { return true; }
 
-		bool hit_test(int x, int y) const override;
+    [[nodiscard]] bool hit_test(int x, int y) const override;
 
-		const char* layout_name() const override { return "box"; }
-	private:
-		
-	};
-	
+    [[nodiscard]] const char *layout_name() const override { return "box"; }
+private:
+
+};
+
 }
